@@ -1,0 +1,36 @@
+To install Sonatype Nexus on a Red Hat Enterprise Linux (RHEL) server, follow these step-by-step instructions:
+Update the server : sudo yum update -y && yum upgrade -y (Update and upgrade all the packages)
+Install java development kit Java 11 or Above required : Sudo yum install java-17-openjdk-devel -y or Sudo yum install java-11-openjdk-devel -y
+Check the java version : java --version
+It is recommended to run nexus as a dedicated user for security purposes: useradd nexus
+Download the nexus: sudo wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+Extract the archive: sudo tar -xvzf latest-unix.tar.gz
+Rename the extracted folder for clarity: sudo mv nexus-3* nexus
+Assign the ownership of nexus folder to nexus user: sudo chown -R nexus:nexus /opt/nexus
+Configure nexus to run as a service: sudo vi /etc/systemd/system/nexus.service
+{ ##Add the following content
+[Unit]
+Description=Nexus Repository Manager
+After=network.target
+
+[Service]
+Type=forking
+User=nexus
+Group=nexus
+ExecStart=/opt/nexus/bin/nexus start
+ExecStop=/opt/nexus/bin/nexus stop
+Restart=on-failure
+TimeoutSec=30
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+}
+Reload the systemd configuration and enable the Nexus service to start at boot:
+sudo systemctl daemon-reload
+sudo systemctl enable nexus
+sudo systemctl start nexus
+Check the status of the Nexus service: sudo systemctl status nexus
+Alternatively, you can check if the Nexus port (default 8081) is listening by using: netstat -tuln | grep 8081
+Access the nexus repository through the web by using public ip of instance where nexus installed and make sure the port 8081 enables at inbound rules of security groups..
+The initial username is (admin) and you can access the password at (/opt/nexus/sonatype-nexus/nexus3/admin.password)
