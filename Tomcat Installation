@@ -1,0 +1,26 @@
+Tomcat: Tomcat is an open soure web application to deploy java based web applications and its implements Java Servelet and java Server pages.
+
+Tomcat Installation on RHEL 9 and the tomcat version is 9 or above.
+
+To set up tomcat, The prerequisites are java. (sudo yum install java-17-openjdk-devel -y).
+
+For security purposes run the tomcat as normal user and create a new user. (sudo useradd tomcat).
+
+Install the tomcat. (sudo wget /opt/tomcat link).
+
+Unzip the package using unzip command. (unzip tomcat**).
+
+Rename the tomcat installation for understanding purpose. (mv tomcat** tomcat).
+
+Access the tomcat through public ip address and make sure the port(8080) is enabled. (http://publicip:port).
+
+To add the users. (/opt/tomcat/conf/tomcat-users.xml) <user username:"****" password:"****" roles="admin-gui"). [admin-gui for host-manager, manager-gui for manager]
+
+Disable the follwing lines at (/opt/tomcat/webapps/manager/META_INF/context.xml) for MANAGER and (/opt/tomcat/webapps/host-manager/META_INF/context.xml) for host manager. To login into the tomcat using credentials.
+
+#Comment the below lines
+#<!-- <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+# allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+
+To start the tomcat . /opt/tomcat/bin/./startup.sh)
+To stop the tomcat. /opt/tomcat/bin/./shutdown.sh)
