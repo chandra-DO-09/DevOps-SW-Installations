@@ -1,0 +1,7 @@
+Installation of Prometheus on Ubuntu 24.04
+By default prometheus is available at apt repository. 
+Update the apt repository ( sudo apt update -y && apt upgrade -y).
+Install the prometheus using apt package manager ( sudo apt install prometheus prometheus-node-exporter -y)
+Enable the prometheus (sudo systemcl enable --now prometheus prometheus-node-exporter)
+Check the status of prometheus. (sudo systemctl status prometheus prometheus-node-exporter)
+Access the prometheus form outside. (http://publicIP:9090).
