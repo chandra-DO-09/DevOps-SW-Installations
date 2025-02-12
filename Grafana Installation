@@ -1,0 +1,29 @@
+Installation of Grafana on Ubuntu on 24.04
+
+Update the package manager (sudo apt update -y && apt upgrade -y)
+
+Grafana requires certain dependencies to function properly. (sudo apt-get install -y apt-transport-https software-properties-common wget -y)
+
+apt-transport-https: It lets you use HTTPS repositories. This ensures secure communication.
+software-properties-common: It provides scripts to add and remove software repositories.
+wget: A command-line utility used to download files from the internet.
+
+Import the Grafana GPG key. 
+(sudo mkdir -p /etc/apt/keyrings/  
+wget -q -O - https://apt.grafana.com/gpg.key | gpg --dearmor | sudo tee /etc/apt/keyrings/grafana.gpg > /dev/null)
+
+Add the Grafana APT repository.
+echo  "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+
+Update package lists again (apt update -y)
+
+To install the open-source edition (Grafana OSS), run the following: (sudo apt install grafana -y) 
+To install Grafana Enterprise, along with all the Enterprise features and plugins, use: (sudo apt-get install grafana-enterprise).
+
+Start the Grafana server by running: (sudo systemctl start grafana-server)
+
+Enable Grafana to start at boot:(sudo systemctl enable grafana-server.service)
+
+To verify that Grafana is running correctly, check its status:(sudo systemctl status grafana-server)
+
+Access the Grafana Web Interface: (http://your_server_ip:3000)
